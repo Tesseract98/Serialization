@@ -24,10 +24,8 @@ public class Converter implements SuperEncoder {
             for (byte b : className.getBytes(ENCODING)) {
                 arrayBefore.add(b);
             }
-//            Map<String, Object> fields = new Hashtable<>();
             List<Object> fields = new LinkedList<>();
             for (Field field : anyBean.getClass().getDeclaredFields()) {
-//                fields.put(field.getName(), field.get(anyBean));
                 fields.add(field.get(anyBean));
             }
             for (Object obj : fields) {
@@ -74,7 +72,6 @@ public class Converter implements SuperEncoder {
 
     private Map<String, Object> getValuesForFields(int byteArrIterator, byte[] byteArray, Class aClass) {
         Map<String, Object> valuesForFields = new HashMap<>();
-//        List<Object> valuesForFields = new LinkedList();
         for (Field field : aClass.getDeclaredFields()) {
             int length = byteArray[++byteArrIterator];
             char[] chars = new char[length];
@@ -84,22 +81,18 @@ public class Converter implements SuperEncoder {
             switch (field.getType().getName()) {
                 case ("int"):
                     int arg1 = Integer.parseInt(new String(chars));
-//                    valuesForFields.add(arg1);
                     valuesForFields.put(field.getName(), arg1);
                     break;
                 case ("double"):
                     double arg2 = Double.parseDouble(new String(chars));
-//                    valuesForFields.add(arg2);
                     valuesForFields.put(field.getName(), arg2);
                     break;
                 case ("char"):
                     char arg3 = chars[0];
-//                    valuesForFields.add(arg3);
                     valuesForFields.put(field.getName(), arg3);
                     break;
                 case ("boolean"):
                     boolean arg4 = Boolean.parseBoolean(new String(chars));
-//                    valuesForFields.add(arg4);
                     valuesForFields.put(field.getName(), arg4);
                     break;
                 case ("java.util.Map"):
@@ -108,19 +101,16 @@ public class Converter implements SuperEncoder {
                     Matcher matcher = pattern.matcher(new String(chars));
                     matcher.find();
                     map.put(matcher.group(1), matcher.group(2));
-//                    valuesForFields.add(map);
                     valuesForFields.put(field.getName(), map);
                     break;
                 case ("java.util.Set"):
                     Set<String> set = new HashSet<>();
                     set.add(new String(chars));
-//                    valuesForFields.add(set);
                     valuesForFields.put(field.getName(), set);
                     break;
                 case ("java.util.List"):
                     List<String> list = new LinkedList<>();
                     list.add(new String(chars));
-//                    valuesForFields.add(list);
                     valuesForFields.put(field.getName(), list);
                     break;
                 default:
