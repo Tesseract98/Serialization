@@ -15,6 +15,7 @@ public class Main {
         exampleBean.setText("hello");
         exampleBean.setNumber(new BigDecimal("12.5E+100"));
         exampleBean.setTime(Clock.systemUTC().instant());
+        exampleBean.setCharSimple('ツ');
 
 	    Converter converter = new Converter();
         byte[] bytes = converter.serialize(exampleBean);
